@@ -1,0 +1,17 @@
+.message__3cqAS {
+	min-height: 0 !important;
+}
+
+.messageContent__3EH9F {
+	padding: 1px 1px 1px 0 !important;
+}
+
+.timeStamp__2loWC::after {
+	display: flex;
+	height: 1px;
+	flex-grow: 1;
+	border-bottom: 1px dashed rgba(228,238,242,.12);
+	content: "";
+}
+
+img.badge__36dP3
