@@ -1,8 +1,9 @@
 class WebElement {
-    constructor(query, events={}) {
+    constructor(query, events={}, no_load=false) {
         this._query = query;
         this._obj = null;
         this._events = events;
+        this.no_load = no_load;
     }
     get query() {
         return this._query;
@@ -38,7 +39,10 @@ function load_elements(elements) {
             for (let element of elements) {
                 let obj = $(element.query);
                 if (obj && obj[0]) element.obj = obj;
-                else loaded = false;
+                else if (!element.no_load) {
+                    loaded = false;
+                    break;
+                }
             }
             if (loaded) {
                 console.log('elements loaded');

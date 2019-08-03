@@ -1,5 +1,13 @@
 class TheatreComponent extends Component {
 	constructor() {
+		const sub_popup = new WebElement('b-subscription-bundle-host', {
+			'theatre-on': function() {
+				this.obj && this.obj.css('display', 'none');
+			},
+			'theatre-off': function() {
+				this.obj && this.obj.css('display', 'initial');
+			},
+		}, true);
 		const stage = new WebElement('.stage', {
 			'theatre-on': function() {
 				this.obj.addClass('custom-theatre');
@@ -87,7 +95,7 @@ class TheatreComponent extends Component {
 		const theatre_button_bound = new WebElement('b-title-progression-host');
 		const language_selector = new WebElement('b-language-selector');
 
-		super('theatre', [stage, header, chat, channel_page, profile_header, chat_resizer, theatre_button_bound, language_selector]);
+		super('theatre', [stage, header, chat, channel_page, profile_header, chat_resizer, theatre_button_bound, language_selector, sub_popup]);
 
 		this.theatre_button_bound = theatre_button_bound;
 		this.language_selector = language_selector;
