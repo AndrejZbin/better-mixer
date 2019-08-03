@@ -33,7 +33,7 @@ class TheatreComponent extends Component {
 				this.obj.removeClass('custom-header');
 				this.obj.css({
 					'width': '100%',
-                    'position': 'initial',
+                    'position': 'sticky',
 				});
 			},
 			'url-change': function() {
