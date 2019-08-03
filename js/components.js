@@ -11,6 +11,7 @@ class Component {
         load_elements(this.elements)
             .then(elements => {
                 this.elements = elements;
+                this.action('loaded');
                 this.main();
             })
             .catch(err => {
