@@ -83,12 +83,12 @@ class TheatreComponent extends Component {
 		});
 
 		const theatre_button_bound = new WebElement('b-title-progression-host');
-		const bell = new WebElement('b-desktop-header .layout-row b-notifications');
+		const language_selector = new WebElement('b-language-selector');
 
-		super('theatre', [stage, header, chat, channel_page, profile_header, chat_resizer, theatre_button_bound, bell]);
+		super('theatre', [stage, header, chat, channel_page, profile_header, chat_resizer, theatre_button_bound, language_selector]);
 
 		this.theatre_button_bound = theatre_button_bound;
-		this.bell = bell;
+		this.language_selector = language_selector;
 		this.in_theatre = false;
 	}
 
@@ -120,7 +120,7 @@ class TheatreComponent extends Component {
 			}
 		});
 
-		this.bell.obj.before(this.get_button("theatre-button-small"));
+		this.language_selector.obj.before(this.get_button("theatre-button-small"));
 		this.theatre_button_bound.obj.before(this.get_button());
 	}
 }

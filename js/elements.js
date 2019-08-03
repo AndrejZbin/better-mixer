@@ -47,6 +47,7 @@ function load_elements(elements) {
             }
             else if (repeats > 10) {
                 console.log('clear load interval');
+                clearInterval(interval);
                 reject();
             }
         }, 500);

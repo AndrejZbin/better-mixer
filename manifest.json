@@ -1,10 +1,10 @@
 {
   "manifest_version": 2,
-  "name": "MixerTheatre",
-  "version": "1.1",
+  "name": "Better Mixer",
+  "version": "1.0",
   "author": "Andrej Zbín",
 
-  "description": "Adds theatre mode to mixer.com. You can toggle theatre mode with a button or with 'T'.",
+  "description": "Adds theatre mode to mixer.com. You can toggle theatre mode with a button or with 'T' key.",
 
   "icons": {
     "48": "icons/48.png",
