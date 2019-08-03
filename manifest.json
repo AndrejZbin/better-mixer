@@ -1,0 +1,21 @@
+{
+  "manifest_version": 2,
+  "name": "MixerTheatre",
+  "version": "1.1",
+  "author": "Andrej Zbín",
+
+  "description": "Adds theatre mode to mixer.com. You can toggle theatre mode with a button or with 'T'.",
+
+  "icons": {
+    "48": "icons/48.png",
+	"96": "icons/96.png"
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["*://*.mixer.com/*"],
+      "js": ["js/jquery-3.4.1.min.js", "js/elements.js", "js/components.js", "js/theatre.js", "js/index.js"],
+      "css": ["css/theatre.css"]
+    }
+  ]
+}

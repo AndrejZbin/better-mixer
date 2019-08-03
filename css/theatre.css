@@ -1,0 +1,45 @@
+.stage {
+    resize: vertical;
+}
+
+.custom-theatre,
+.stage.custom-theatre,
+.stage.aspect-16-9.custom-theatre,
+.stage.online.custom-theatre,
+.stage.online.aspect-16-9.custom-theatre {
+    resize: none;
+    width: 100%;
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.stage.online.custom-theatre:not(.aspect-16-9) {
+    height: 100vh;
+    resize: vertical;
+}
+
+.theatre-button {
+	background-color: Transparent;
+    background-repeat: no-repeat;
+    border: none;
+    cursor: pointer;
+    overflow: hidden;
+    outline: none;
+	font-size: 200%;
+	padding-bottom: 0.6%;
+}
+
+.theatre-button-small {
+    font-size: 150%;
+    padding-bottom: 1%;
+}
+
+.custom-header {
+    position: fixed;
+    z-index: 6;
+    opacity: 0;
+}
+
+.custom-header:hover, .custom-header:active {
+    opacity: 1;
+}
