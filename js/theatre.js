@@ -12,11 +12,18 @@ class TheatreComponent extends Component {
 			'theatre-on': function() {
 				this.obj.addClass('custom-theatre');
 				this.saved_style = this.obj.attr('style');
-				this.obj.attr('style', this.saved_style_theatre || '');
+				if (this.obj.hasClass('aspect-16-9')) {
+					this.obj.attr('style', '');
+				}
+				else {
+					this.obj.attr('style', this.saved_style_theatre || '');
+				}
 			},
 			'theatre-off': function() {
 				this.obj.removeClass('custom-theatre');
-				this.saved_style_theatre = this.obj.attr('style');
+				if (!this.obj.hasClass('aspect-16-9')) {
+					this.saved_style_theatre = this.obj.attr('style');
+				}
 				this.obj.attr('style', this.saved_style || '');
 			},
 		});
