@@ -18,12 +18,14 @@ class TheatreComponent extends Component {
 				this.obj.addClass('custom-header');
 				this.obj.css({
 					'width': `calc(100% - ${chat.obj.css( "width" )} - 17px)`,
+                    'position': 'fixed',
 				});
 			},
 			'theatre-off': function() {
 				this.obj.removeClass('custom-header');
 				this.obj.css({
 					'width': '100%',
+                    'position': 'initial',
 				});
 			},
 			'url-change': function() {

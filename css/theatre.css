@@ -35,7 +35,6 @@
 }
 
 .custom-header {
-    position: fixed;
     z-index: 6;
     opacity: 0;
 }
