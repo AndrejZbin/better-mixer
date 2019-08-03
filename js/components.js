@@ -5,7 +5,7 @@ class Component {
     }
     action(event, ...args) {
         console.log('action ' + event);
-        for (let element of this.elements) element.action(event, ...args)
+        for (let element of this.elements) element.action(event, ...args);
     }
     reload() {
         load_elements(this.elements)

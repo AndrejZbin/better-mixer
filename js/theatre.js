@@ -17,7 +17,7 @@ class TheatreComponent extends Component {
 			'theatre-on': function() {
 				this.obj.addClass('custom-header');
 				this.obj.css({
-					'width': `calc(100% - ${chat.obj.css( "width" )} - 17px)`,
+					'width': stage.obj.css('width'),
                     'position': 'fixed',
 				});
 			},
