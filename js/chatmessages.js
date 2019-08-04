@@ -33,6 +33,6 @@ class ChatMessagesComponent extends Component {
             }
         });
 
-        add_css('css/chatmessages/base.css');
+        //add_css('css/chatmessages/base.css');
     }
 }
