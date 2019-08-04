@@ -132,7 +132,7 @@ class TheatreComponent extends Component {
 		$('.theatre-button').remove();
 
 		$(document).on('keypress', e => {
-			if ([84, 116].includes(e.which)) {
+			if ([84, 116].includes(e.which) && !['TEXTAREA'].includes(e.target.nodeName)) {
 				this.on_button_click();
 			}
 		});
