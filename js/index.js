@@ -1,3 +1,7 @@
+var BROWSER;
+if (typeof browser !== "undefined") BROWSER = browser;
+else if (typeof chrome !== "undefined") BROWSER = chrome;
+
 let theatre = new TheatreComponent();
 let clean = new CleanComponent();
 let messages = new ChatMessagesComponent();

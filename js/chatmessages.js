@@ -10,7 +10,7 @@ class ChatMessagesComponent extends Component {
         });
         const head= new WebElement('head', {
             'loaded': function() {
-                this.obj.append($(`<link rel='stylesheet' href='${browser.runtime.getURL('css/chatmessages/base.css')}' type='text/css' media='screen' />`));
+                this.obj.append($(`<link rel='stylesheet' href='${BROWSER.runtime.getURL('css/chatmessages/base.css')}' type='text/css' media='screen' />`));
             },
             'url-change': function () {
 
@@ -18,7 +18,7 @@ class ChatMessagesComponent extends Component {
         });
         super('chat-messages', [chat, head]);
         this.chat = chat;
-        this.sub_only = true;
+        this.sub_only = false;
     }
     main() {
         super.main();
