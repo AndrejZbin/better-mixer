@@ -24,6 +24,9 @@ class ChatMessagesComponent extends Component {
         super.main();
         let sub_only = this.sub_only;
         let interval = setInterval(() => {
+            if (!this.chat.obj || !this.chat.obj.isConnected) {
+					this.chat.obj = $(this.chat.query);
+            }
             this.chat.obj.find('.message__3cqAS .messageContent__3EH9F:not(.custom-message-visited)').each(function() {
                 let el = $(this);
                 el.addClass('custom-message-visited');
