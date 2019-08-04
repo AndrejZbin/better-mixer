@@ -58,6 +58,10 @@ class TheatreComponent extends Component {
 		});
 
 		this.el('chat').on_actions({
+			'loaded': function() {
+				if (self.in_theatre) this.action('theatre-on');
+				else this.action('theatre-off');
+			},
 			'theatre-on': function() {
 				// disconnected when fullscreen
 				let obj = this.obj.get(0);
