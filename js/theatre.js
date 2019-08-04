@@ -1,14 +1,19 @@
 class TheatreComponent extends Component {
 	constructor() {
-		const sub_popup = new WebElement('b-subscription-bundle-host', {
+		super('theatre');
+
+		this.in_theatre = false;
+		let self = this;
+
+		this.el('sub_popup').on_actions({
 			'theatre-on': function() {
 				this.obj && this.obj.css('display', 'none');
 			},
 			'theatre-off': function() {
 				this.obj && this.obj.css('display', 'initial');
 			},
-		}, true);
-		const stage = new WebElement('.stage', {
+		});
+		this.el('stage').on_actions({
 			'theatre-on': function() {
 				this.obj.addClass('custom-theatre');
 				this.saved_style = this.obj.attr('style');
@@ -28,11 +33,11 @@ class TheatreComponent extends Component {
 			},
 		});
 
-		const header = new WebElement('b-desktop-header', {
+		this.el('header').on_actions({
 			'theatre-on': function() {
 				this.obj.addClass('custom-header');
 				this.obj.css({
-					'width': stage.obj.css('width'),
+					'width': EM.el('stage').obj.css('width'),
                     'position': 'fixed',
 				});
 			},
@@ -43,16 +48,16 @@ class TheatreComponent extends Component {
                     'position': 'sticky',
 				});
 			},
-			'url-change': function() {
+			'url-changed': function() {
 				this.obj.removeClass('custom-header');
 				this.obj.css({
 					'width': '100%',
 				});
-				$('.theatre-button').remove();
+				this.obj.find('.theatre-button').remove();
 			}
 		});
 
-		const chat = new WebElement('aside.chat',{
+		this.el('chat').on_actions({
 			'theatre-on': function() {
 				// disconnected when fullscreen
 				let obj = this.obj.get(0);
@@ -66,7 +71,7 @@ class TheatreComponent extends Component {
 			}
 		});
 
-		const channel_page = new WebElement('div.channel-page',{
+		this.el('channel_page').on_actions({
 			'theatre-on': function() {
 				this.obj.css({
 					'height': '100vh',
@@ -81,7 +86,7 @@ class TheatreComponent extends Component {
 			}
 		});
 
-		const profile_header = new WebElement('div.layout-row.layout-align-space-between-start.profile-header', {
+		this.el('profile_header').on_actions({
 			'theatre-on': function() {
 				this.obj.css('position', 'relative');
 			},
@@ -90,7 +95,7 @@ class TheatreComponent extends Component {
 			}
 		});
 
-		const chat_resizer = new WebElement('b-channel-chat-resizer', {
+		this.el('chat_resizer').on_actions({
 			'theatre-on': function() {
 				this.obj.css('display', 'none');
 			},
@@ -99,46 +104,37 @@ class TheatreComponent extends Component {
 			}
 		});
 
-		const theatre_button_bound = new WebElement('b-title-progression-host');
-		const language_selector = new WebElement('b-language-selector');
+		this.el('theatre_button_bound').on_actions({
+			'url-changed-channel': function () {
+				this.obj_promise()
+					.then(obj => obj.before(self.theatre_button()));
+			}
+		});
+		this.el('language_selector').on_actions({
+			'url-changed-channel': function () {
+				this.obj_promise()
+					.then(obj => obj.before(self.theatre_button("theatre-button-small")));
+			}
+		});
 
-		super('theatre', [stage, header, chat, channel_page, profile_header, chat_resizer, theatre_button_bound, language_selector, sub_popup]);
-
-		this.theatre_button_bound = theatre_button_bound;
-		this.language_selector = language_selector;
-		this.in_theatre = false;
+		$(document).on('keypress', e => {
+			if ([84, 116].includes(e.which) && !['TEXTAREA', 'TEXTFIELD', 'INPUT'].includes(e.target.nodeName)) {
+				this.toggle_theatre();
+			}
+		});
 	}
 
-	reload() {
-		super.reload();
-		this.in_theatre = false;
-	}
-
-	get_button(classes='') {
+	theatre_button(classes='') {
 		let $threatre_button = $(`<input type="button" class="theatre-button ${classes}" value="📺" title="Theatre Mode"/>`);
-		$threatre_button.click(this.on_button_click.bind(this));
+		$threatre_button.click(this.toggle_theatre.bind(this));
 		return $threatre_button;
 	}
 
-	on_button_click() {
+	toggle_theatre() {
 		console.log('theatre mode changed');
 		this.in_theatre = !this.in_theatre;
 		if (this.in_theatre) this.action('theatre-on');
 		else this.action('theatre-off')
-	}
-
-	main() {
-		super.main();
-		$('.theatre-button').remove();
-
-		$(document).on('keypress', e => {
-			if ([84, 116].includes(e.which) && !['TEXTAREA'].includes(e.target.nodeName)) {
-				this.on_button_click();
-			}
-		});
-
-		this.language_selector.obj.before(this.get_button("theatre-button-small"));
-		this.theatre_button_bound.obj.before(this.get_button());
 	}
 }
 
