@@ -26,12 +26,7 @@
   },
 
   "permissions": ["storage"],
-
-  "applications": {
-    "gecko": {
-      "id": "gpocoahahgojjde@oibbhiecgidbecmj"
-    }
-  },
+  
 
   "content_scripts": [
     {

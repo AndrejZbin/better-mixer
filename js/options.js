@@ -35,8 +35,12 @@ class Options {
         }
 
         for (let field of fields) {
-            BROWSER.storage.sync.get(field)
-                .then(setChoice(field), onError(field));
+            if (typeof browser !== "undefined")
+                BROWSER.storage.sync.get(field)
+                    .then(setChoice(field), onError(field));
+            else if (typeof chrome !== "undefined")
+                BROWSER.storage.sync.get(field, setChoice(field));
+            else this.loaded = true;
         }
 
 

@@ -25,8 +25,11 @@ function restoreOptions() {
     }
 
     for (let field of fields) {
-        BROWSER.storage.sync.get(field)
-            .then(setChoice(field), onError);
+            if (typeof browser !== "undefined")
+                browser.storage.sync.get(field)
+                    .then(setChoice(field), onError);
+            else if (typeof chrome !== "undefined")
+                chrome.storage.sync.get(field, setChoice(field));
     }
 
 
