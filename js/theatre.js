@@ -16,9 +16,14 @@ class TheatreComponent extends Component {
 			});
 
 		this.el('stage').on_actions({
-            'loaded': function() {
+            'url-changed-channel': function() {
                 if (OPTIONS.opt('theatre_automatic')) {
-                    self.toggle_theatre();
+                    self.toggle_theatre(true);
+                }
+            },
+			'loaded': function() {
+                if (OPTIONS.opt('theatre_automatic')) {
+                    self.toggle_theatre(true);
                 }
             },
 			'theatre-on': function() {
@@ -124,6 +129,7 @@ class TheatreComponent extends Component {
 				'url-changed-channel': function () {
 					this.obj_promise()
 						.then(obj => {
+							obj.parent().find('.theatre-button').remove();
 							obj.before(self.theatre_button())
 						});
 				}
@@ -134,7 +140,7 @@ class TheatreComponent extends Component {
 				'url-changed-channel': function () {
 					this.obj_promise()
 						.then(obj => {
-							self.el('header').obj.find('.theatre-button').remove();
+							obj.parent().find('.theatre-button').remove();
 							obj.before(self.theatre_button("theatre-button-small"))
 						});
 				},
@@ -157,14 +163,18 @@ class TheatreComponent extends Component {
 		return $threatre_button;
 	}
 
-	toggle_theatre() {
-		console.log('theatre mode changed');
-		this.in_theatre = !this.in_theatre;
+	toggle_theatre(state) {
+		console.log('theatre mode changed ' + state);
+		if (state === true) {
+			this.in_theatre = true;
+		}
+		else if (state === false) {
+			this.in_theatre = false;
+		}
+		else {
+			this.in_theatre = !this.in_theatre;
+		}
 		if (this.in_theatre) this.action('theatre-on');
 		else this.action('theatre-off')
 	}
 }
-
-
-
-

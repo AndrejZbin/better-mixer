@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Better Mixer",
-  "version": "1.7.2",
+  "version": "1.7.4",
   "author": "Andrej Zbín",
 
   "description": "Theatre mode, cleaner channel and more QoL improvements",
@@ -26,6 +26,13 @@
   },
 
   "permissions": ["storage"],
+
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "addon@example.com",
+      "strict_min_version": "42.0"
+    }
+  },
 
   "content_scripts": [
     {
