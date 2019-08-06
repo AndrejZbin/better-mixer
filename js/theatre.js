@@ -21,11 +21,6 @@ class TheatreComponent extends Component {
                     self.toggle_theatre(true);
                 }
             },
-			'loaded': function() {
-                if (OPTIONS.opt('theatre_automatic')) {
-                    self.toggle_theatre(true);
-                }
-            },
 			'theatre-on': function() {
 				this.obj.addClass('custom-theatre');
 				this.saved_style = this.obj.attr('style');
@@ -150,7 +145,9 @@ class TheatreComponent extends Component {
 			if ([84, 116].includes(e.which) && !['TEXTAREA', 'TEXTFIELD', 'INPUT'].includes(e.target.nodeName)) {
 				this.toggle_theatre();
 			}
-		})
+		});
+
+        setTimeout(() => self.toggle_theatre(true), 2200);
 
 	}
 
