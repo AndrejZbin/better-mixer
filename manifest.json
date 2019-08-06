@@ -11,6 +11,16 @@
 	"96": "icons/96.png"
   },
 
+  "browser_action": {
+    "browser_style": true,
+    "default_icon": {
+      "16": "icons/16.png",
+      "32": "icons/32.png"
+    },
+    "default_title": "Change settings?",
+    "default_popup": "settings.html"
+  },
+
    "options_ui": {
     "page": "settings.html"
   },
