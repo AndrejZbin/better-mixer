@@ -5,7 +5,7 @@ class TheatreComponent extends Component {
 		this.in_theatre = false;
 		let self = this;
 
-		if (OPTIONS.oooo('resize_top_panel'))
+		if (OPTIONS.opt('resize_top_panel'))
 			this.el('sub_popup').on_actions({
 				'theatre-on': function() {
 					this.obj && this.obj.css('display', 'none');
@@ -35,7 +35,7 @@ class TheatreComponent extends Component {
 			},
 		});
 
-		if (OPTIONS.oooo('resize_top_panel'))
+		if (OPTIONS.opt('resize_top_panel'))
 			this.el('header').on_actions({
 				'theatre-on': function() {
 					this.obj.addClass('custom-header');
@@ -60,7 +60,7 @@ class TheatreComponent extends Component {
 				}
 			});
 
-		if (OPTIONS.oooo('resize_top_panel'))
+		if (OPTIONS.opt('resize_top_panel'))
 			this.el('chat').on_actions({
 				'loaded': function() {
 					if (self.in_theatre) this.action('theatre-on');
@@ -79,7 +79,7 @@ class TheatreComponent extends Component {
 				}
 			});
 
-		if (OPTIONS.oooo('resize_top_panel'))
+		if (OPTIONS.opt('resize_top_panel'))
 			this.el('channel_page').on_actions({
 				'theatre-on': function() {
 					this.obj.css({
@@ -95,7 +95,7 @@ class TheatreComponent extends Component {
 				}
 			});
 
-		if (OPTIONS.oooo('resize_top_panel'))
+		if (OPTIONS.opt('resize_top_panel'))
 			this.el('profile_header').on_actions({
 				'theatre-on': function() {
 					this.obj.css('position', 'relative');
@@ -114,7 +114,7 @@ class TheatreComponent extends Component {
 			}
 		});
 
-		if (OPTIONS.oooo('theatre_bottom'))
+		if (OPTIONS.opt('theatre_bottom'))
 			this.el('theatre_button_bound').on_actions({
 				'url-changed-channel': function () {
 					this.obj_promise()
@@ -124,7 +124,7 @@ class TheatreComponent extends Component {
 				}
 			});
 
-		if (OPTIONS.oooo('theatre_top'))
+		if (OPTIONS.opt('theatre_top'))
 			this.el('language_selector').on_actions({
 				'url-changed-channel': function () {
 					this.obj_promise()
@@ -143,6 +143,10 @@ class TheatreComponent extends Component {
 				this.toggle_theatre();
 			}
 		});
+
+		if (OPTIONS.opt('theatre_automatic')) {
+		    this.toggle_theatre();
+        }
 	}
 
 	theatre_button(classes='') {

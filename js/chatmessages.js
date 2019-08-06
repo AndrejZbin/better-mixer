@@ -14,10 +14,10 @@ class ChatMessagesComponent extends Component {
                         let el = $(this);
                         let children = el.children();
                         let member_badge = $(children.get(0)).find('img');
-                        if (member_badge.length === 0 && OPTIONS.oooo('sub_only')) el.remove();
+                        if (member_badge.length === 0 && OPTIONS.opt('sub_only')) el.remove();
                         else {
                             el.addClass('custom-message-visible');
-                            if (OPTIONS.oooo('move_badge'))
+                            if (OPTIONS.opt('move_badge'))
                                 member_badge.prependTo(children.get(0)).css('margin-right', '0.4em');
                         }
                     });
@@ -31,6 +31,6 @@ class ChatMessagesComponent extends Component {
             }
         });
 
-        if (OPTIONS.oooo('sub_only')) add_css('css/chatmessages/base.css');
+        if (OPTIONS.opt('sub_only')) add_css('css/chatmessages/base.css');
     }
 }
