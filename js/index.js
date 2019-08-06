@@ -1,10 +1,17 @@
-var BROWSER;
-if (typeof browser !== "undefined") BROWSER = browser;
-else if (typeof chrome !== "undefined") BROWSER = chrome;
+let theatre;
+let clean;
+let messages;
 
-let theatre = new TheatreComponent();
-let clean = new CleanComponent();
-let messages = new ChatMessagesComponent();
+let interval = setInterval(() => {
+	if (OPTIONS.loaded) {
+		theatre = new TheatreComponent();
+		clean = new CleanComponent();
+		messages = new ChatMessagesComponent();
+		clearInterval(interval);
+	}
+}, 100);
+
+
 
 let url = '';
 

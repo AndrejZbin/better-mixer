@@ -5,14 +5,16 @@ class TheatreComponent extends Component {
 		this.in_theatre = false;
 		let self = this;
 
-		this.el('sub_popup').on_actions({
-			'theatre-on': function() {
-				this.obj && this.obj.css('display', 'none');
-			},
-			'theatre-off': function() {
-				this.obj && this.obj.css('display', 'initial');
-			},
-		});
+		if (OPTIONS.oooo('resize_top_panel'))
+			this.el('sub_popup').on_actions({
+				'theatre-on': function() {
+					this.obj && this.obj.css('display', 'none');
+				},
+				'theatre-off': function() {
+					this.obj && this.obj.css('display', 'initial');
+				},
+			});
+
 		this.el('stage').on_actions({
 			'theatre-on': function() {
 				this.obj.addClass('custom-theatre');
@@ -33,71 +35,75 @@ class TheatreComponent extends Component {
 			},
 		});
 
-		this.el('header').on_actions({
-			'theatre-on': function() {
-				this.obj.addClass('custom-header');
-				this.obj.css({
-					'width': EM.el('stage').obj.css('width'),
-                    'position': 'fixed',
-				});
-			},
-			'theatre-off': function() {
-				this.obj.removeClass('custom-header');
-				this.obj.css({
-					'width': '100%',
-                    'position': 'sticky',
-				});
-			},
-			'url-changed': function() {
-				this.obj.removeClass('custom-header');
-				this.obj.css({
-					'width': '100%',
-				});
-				this.obj.find('.theatre-button').remove();
-			}
-		});
-
-		this.el('chat').on_actions({
-			'loaded': function() {
-				if (self.in_theatre) this.action('theatre-on');
-				else this.action('theatre-off');
-			},
-			'theatre-on': function() {
-				// disconnected when fullscreen
-				let obj = this.obj.get(0);
-				if (!obj || !obj.isConnected) {
-					this.obj = $(this.query);
+		if (OPTIONS.oooo('resize_top_panel'))
+			this.el('header').on_actions({
+				'theatre-on': function() {
+					this.obj.addClass('custom-header');
+					this.obj.css({
+						'width': EM.el('stage').obj.css('width'),
+						'position': 'fixed',
+					});
+				},
+				'theatre-off': function() {
+					this.obj.removeClass('custom-header');
+					this.obj.css({
+						'width': '100%',
+						'position': 'sticky',
+					});
+				},
+				'url-changed': function() {
+					this.obj.removeClass('custom-header');
+					this.obj.css({
+						'width': '100%',
+					});
+					this.obj.find('.theatre-button').remove();
 				}
-				this.obj.css('top', '0');
-			},
-			'theatre-off': function() {
-				this.obj.css('top', '60px');
-			}
-		});
+			});
 
-		this.el('channel_page').on_actions({
-			'theatre-on': function() {
-				this.obj.css({
-					'height': '100vh',
-					'max-height': '100vh',
-				});
-			},
-			'theatre-off': function() {
-				this.obj.css({
-					'height': 'calc(100vh - 60px)',
-					'max-height': 'calc(100vh - 60px)',
-				});
-			}
-		});
+		if (OPTIONS.oooo('resize_top_panel'))
+			this.el('chat').on_actions({
+				'loaded': function() {
+					if (self.in_theatre) this.action('theatre-on');
+					else this.action('theatre-off');
+				},
+				'theatre-on': function() {
+					// disconnected when fullscreen
+					let obj = this.obj.get(0);
+					if (!obj || !obj.isConnected) {
+						this.obj = $(this.query);
+					}
+					this.obj.css('top', '0');
+				},
+				'theatre-off': function() {
+					this.obj.css('top', '60px');
+				}
+			});
 
-		this.el('profile_header').on_actions({
-			'theatre-on': function() {
-				this.obj.css('position', 'relative');
-			},
-			'theatre-off': function() {
-				this.obj.css('position', 'sticky');
-			}
-		});
+		if (OPTIONS.oooo('resize_top_panel'))
+			this.el('channel_page').on_actions({
+				'theatre-on': function() {
+					this.obj.css({
+						'height': '100vh',
+						'max-height': '100vh',
+					});
+				},
+				'theatre-off': function() {
+					this.obj.css({
+						'height': 'calc(100vh - 60px)',
+						'max-height': 'calc(100vh - 60px)',
+					});
+				}
+			});
+
+		if (OPTIONS.oooo('resize_top_panel'))
+			this.el('profile_header').on_actions({
+				'theatre-on': function() {
+					this.obj.css('position', 'relative');
+				},
+				'theatre-off': function() {
+					this.obj.css('position', 'sticky');
+				}
+			});
 
 		this.el('chat_resizer').on_actions({
 			'theatre-on': function() {
@@ -108,18 +114,21 @@ class TheatreComponent extends Component {
 			}
 		});
 
-		this.el('theatre_button_bound').on_actions({
-			'url-changed-channel': function () {
-				this.obj_promise()
-					.then(obj => obj.before(self.theatre_button()));
-			}
-		});
-		this.el('language_selector').on_actions({
-			'url-changed-channel': function () {
-				this.obj_promise()
-					.then(obj => obj.before(self.theatre_button("theatre-button-small")));
-			}
-		});
+		if (OPTIONS.oooo('theatre_bottom'))
+			this.el('theatre_button_bound').on_actions({
+				'url-changed-channel': function () {
+					this.obj_promise()
+						.then(obj => obj.before(self.theatre_button()));
+				}
+			});
+
+		if (OPTIONS.oooo('theatre_top'))
+			this.el('language_selector').on_actions({
+				'url-changed-channel': function () {
+					this.obj_promise()
+						.then(obj => obj.before(self.theatre_button("theatre-button-small")));
+				}
+			});
 
 		$(document).on('keypress', e => {
 			if ([84, 116].includes(e.which) && !['TEXTAREA', 'TEXTFIELD', 'INPUT'].includes(e.target.nodeName)) {
