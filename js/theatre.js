@@ -16,6 +16,11 @@ class TheatreComponent extends Component {
 			});
 
 		this.el('stage').on_actions({
+            'loaded': function() {
+                if (OPTIONS.opt('theatre_automatic')) {
+                    self.toggle_theatre();
+                }
+            },
 			'theatre-on': function() {
 				this.obj.addClass('custom-theatre');
 				this.saved_style = this.obj.attr('style');
@@ -142,11 +147,8 @@ class TheatreComponent extends Component {
 			if ([84, 116].includes(e.which) && !['TEXTAREA', 'TEXTFIELD', 'INPUT'].includes(e.target.nodeName)) {
 				this.toggle_theatre();
 			}
-		});
+		})
 
-		if (OPTIONS.opt('theatre_automatic')) {
-		    this.toggle_theatre();
-        }
 	}
 
 	theatre_button(classes='') {
