@@ -62,10 +62,7 @@ class TheatreComponent extends Component {
 					});
 				},
 				'url-changed': function() {
-					this.obj.removeClass('custom-header');
-					this.obj.css({
-						'width': '100%',
-					});
+					this.action('theatre-off');
 					this.obj.find('.theatre-button').remove();
 				}
 			});
