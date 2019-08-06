@@ -147,7 +147,7 @@ class TheatreComponent extends Component {
 			}
 		});
 
-        setTimeout(() => self.toggle_theatre(true), 2200);
+        if (OPTIONS.opt('theatre_automatic')) setTimeout(() => self.toggle_theatre(true), 2200);
 
 	}
 
@@ -158,7 +158,6 @@ class TheatreComponent extends Component {
 	}
 
 	toggle_theatre(state) {
-		console.log('theatre mode changed ' + state);
 		if (state === true) {
 			this.in_theatre = true;
 		}
