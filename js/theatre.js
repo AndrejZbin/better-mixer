@@ -118,7 +118,9 @@ class TheatreComponent extends Component {
 			this.el('theatre_button_bound').on_actions({
 				'url-changed-channel': function () {
 					this.obj_promise()
-						.then(obj => obj.before(self.theatre_button()));
+						.then(obj => {
+							obj.before(self.theatre_button())
+						});
 				}
 			});
 
@@ -126,7 +128,13 @@ class TheatreComponent extends Component {
 			this.el('language_selector').on_actions({
 				'url-changed-channel': function () {
 					this.obj_promise()
-						.then(obj => obj.before(self.theatre_button("theatre-button-small")));
+						.then(obj => {
+							self.el('header').obj.find('.theatre-button').remove();
+							obj.before(self.theatre_button("theatre-button-small"))
+						});
+				},
+				'url-changed': function() {
+					self.el('header').obj.find('.theatre-button').remove();
 				}
 			});
 
