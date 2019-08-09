@@ -15,12 +15,19 @@ class TheatreComponent extends Component {
 				},
 			});
 
+		let timeout = null;
 		this.el('stage').on_actions({
             'url-changed-channel': function() {
                 if (OPTIONS.opt('theatre_automatic')) {
-                    self.toggle_theatre(true);
+                    timeout = setTimeout(() => {
+                    	self.toggle_theatre(true);
+                    	timeout = null;
+					}, 2200);
                 }
             },
+			'url-changes': function () {
+				if (timeout !== null) clearTimeout(timeout)
+			},
 			'theatre-on': function() {
 				this.obj.addClass('custom-theatre');
 				this.saved_style = this.obj.attr('style');
@@ -146,8 +153,6 @@ class TheatreComponent extends Component {
 				this.toggle_theatre();
 			}
 		});
-
-        if (OPTIONS.opt('theatre_automatic')) setTimeout(() => self.toggle_theatre(true), 2200);
 
 	}
 
