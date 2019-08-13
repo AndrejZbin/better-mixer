@@ -42,3 +42,7 @@
 .custom-header:hover, .custom-header:active {
     opacity: 1;
 }
+
+.black-background {
+    background-color: black;
+}

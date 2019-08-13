@@ -2,7 +2,7 @@ var BROWSER;
 if (typeof browser !== "undefined") BROWSER = browser;
 else if (typeof chrome !== "undefined") BROWSER = chrome;
 
-const fields = ['theatre_top', 'theatre_bottom', 'remove_spark', 'move_badge', 'compact_chat', 'sub_only', 'resize_top_panel', 'remove_avatars', 'theatre_automatic'];
+const fields = ['theatre_top', 'theatre_bottom', 'remove_spark', 'move_badge', 'compact_chat', 'sub_only', 'resize_top_panel', 'remove_avatars', 'theatre_automatic', 'keyboard_control', 'black_theatre', 'remove_purchase'];
 
 function saveOptions(e) {
     e.preventDefault();

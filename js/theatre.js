@@ -30,6 +30,7 @@ class TheatreComponent extends Component {
 			},
 			'theatre-on': function() {
 				this.obj.addClass('custom-theatre');
+				if (OPTIONS.opt('black_theatre')) this.obj.addClass('black-background');
 				this.saved_style = this.obj.attr('style');
 				if (this.obj.hasClass('aspect-16-9')) {
 					this.obj.attr('style', '');
@@ -40,6 +41,7 @@ class TheatreComponent extends Component {
 			},
 			'theatre-off': function() {
 				this.obj.removeClass('custom-theatre');
+				this.obj.removeClass('black-background');
 				if (!this.obj.hasClass('aspect-16-9')) {
 					this.saved_style_theatre = this.obj.attr('style');
 				}
@@ -134,30 +136,19 @@ class TheatreComponent extends Component {
 				}
 			});
 
-		if (OPTIONS.opt('theatre_top'))
-			this.el('language_selector').on_actions({
-				'url-changed-channel': function () {
-					this.obj_promise()
-						.then(obj => {
-							obj.parent().find('.theatre-button').remove();
-							obj.before(self.theatre_button("theatre-button-small"))
-						});
-				},
-				'url-changed': function() {
-					self.el('header').obj.find('.theatre-button').remove();
-				}
-			});
-
-		$(document).on('keypress', e => {
-			if ([84, 116].includes(e.which) && !['TEXTAREA', 'TEXTFIELD', 'INPUT'].includes(e.target.nodeName)) {
-				this.toggle_theatre();
-			}
-		});
-
+		if (OPTIONS.opt('keyboard_control'))
+            $(document).keydown((e) => {
+                if ([84, 116].includes(e.which) && !['TEXTAREA', 'TEXTFIELD', 'INPUT'].includes(e.target.nodeName)) {
+                    this.toggle_theatre();
+                }
+            });
 	}
 
 	theatre_button(classes='') {
-		let $threatre_button = $(`<input type="button" class="theatre-button ${classes}" value="📺" title="Theatre Mode"/>`);
+		let $threatre_button = $(`
+			<div _ngcontent-c68="" class="control">
+				<input type="button" class="theatre-button ${classes}" value="📺" title="Theatre Mode"/>
+			</div>`);
 		$threatre_button.click(this.toggle_theatre.bind(this));
 		return $threatre_button;
 	}

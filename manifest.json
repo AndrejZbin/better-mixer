@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Better Mixer",
-  "version": "1.7.8",
+  "version": "1.8.0",
   "author": "Andrej Zbín",
 
   "description": "Theatre mode, cleaner channel and more QoL improvements",
@@ -30,11 +30,11 @@
   "content_scripts": [
     {
       "matches": ["*://*.mixer.com/*"],
-      "js": ["js/jquery-3.4.1.min.js", "js/options.js", "js/elements.js", "js/components.js", "js/theatre.js", "js/cleansite.js", "js/chatmessages.js",  "js/index.js"],
+      "js": ["js/jquery-3.4.1.min.js", "js/options.js", "js/elements.js", "js/components.js", "js/keyboard.js", "js/theatre.js", "js/cleansite.js", "js/chatmessages.js",  "js/index.js"],
       "css": ["css/theatre.css"]
     }
   ],
   "web_accessible_resources": [
-	  "css/cleansite/spark-badges.css", "css/cleansite/avatars.css", "css/cleansite/compact.css", "css/chatmessages/base.css"
+	  "css/cleansite/spark-badges.css", "css/cleansite/purchase.css", "css/cleansite/avatars.css", "css/cleansite/compact.css", "css/chatmessages/base.css"
   ]
 }

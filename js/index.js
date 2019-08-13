@@ -1,12 +1,14 @@
 let theatre;
 let clean;
 let messages;
+let keyboard;
 
 let interval = setInterval(() => {
 	if (OPTIONS.loaded) {
 		theatre = new TheatreComponent();
 		clean = new CleanComponent();
 		messages = new ChatMessagesComponent();
+		messages = new KeyboardComponent();
 		clearInterval(interval);
 	}
 }, 100);
