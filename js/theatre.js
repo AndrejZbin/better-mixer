@@ -138,7 +138,7 @@ class TheatreComponent extends Component {
 
 		if (OPTIONS.opt('keyboard_control'))
             $(document).keydown((e) => {
-                if ([84, 116].includes(e.which) && !['TEXTAREA', 'TEXTFIELD', 'INPUT'].includes(e.target.nodeName)) {
+                if ([84, 116].includes(e.which) && !['TEXTAREA', 'TEXTFIELD'].includes(e.target.nodeName)) {
                     this.toggle_theatre();
                 }
             });
