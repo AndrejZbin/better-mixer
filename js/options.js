@@ -4,7 +4,7 @@ else if (typeof chrome !== "undefined") BROWSER = chrome;
 
 class Options {
     constructor() {
-        const fields = ['theatre_top', 'theatre_bottom', 'remove_spark', 'move_badge', 'compact_chat', 'sub_only', 'resize_top_panel', 'remove_avatars', 'theatre_automatic', 'keyboard_control', 'black_theatre', 'remove_purchase'];
+        const fields = ['remove_spark', 'move_badge', 'compact_chat', 'sub_only', 'resize_top_panel', 'remove_avatars', 'theatre_automatic', 'keyboard_control', 'black_theatre', 'remove_purchase'];
         this.options = {};
 
         let self = this;

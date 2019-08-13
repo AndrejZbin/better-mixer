@@ -125,16 +125,15 @@ class TheatreComponent extends Component {
 			}
 		});
 
-		if (OPTIONS.opt('theatre_bottom'))
-			this.el('theatre_button_bound').on_actions({
-				'url-changed-channel': function () {
-					this.obj_promise()
-						.then(obj => {
-							obj.parent().find('.theatre-button').remove();
-							obj.before(self.theatre_button())
-						});
-				}
-			});
+		this.el('theatre_button_bound').on_actions({
+			'url-changed-channel': function () {
+				this.obj_promise()
+					.then(obj => {
+						obj.parent().find('.theatre-button').remove();
+						obj.before(self.theatre_button())
+					});
+			}
+		});
 
 		if (OPTIONS.opt('keyboard_control'))
             $(document).keydown((e) => {
