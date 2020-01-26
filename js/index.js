@@ -1,10 +1,19 @@
-var BROWSER;
-if (typeof browser !== "undefined") BROWSER = browser;
-else if (typeof chrome !== "undefined") BROWSER = chrome;
+let theatre;
+let clean;
+let messages;
+let keyboard;
 
-let theatre = new TheatreComponent();
-let clean = new CleanComponent();
-let messages = new ChatMessagesComponent();
+let interval = setInterval(() => {
+	if (OPTIONS.loaded) {
+		theatre = new TheatreComponent();
+		clean = new CleanComponent();
+		messages = new ChatMessagesComponent();
+		messages = new KeyboardComponent();
+		clearInterval(interval);
+	}
+}, 100);
+
+
 
 let url = '';
 
@@ -13,14 +22,17 @@ setInterval(() => {
 	if (url !== window.location.href) {
 		console.log('site changed');
 		url = window.location.href;
-		theatre.url_change();
-		clean.url_change();
-		messages.url_change();
 		if (/mixer.com\/[^/]+\/?$/.test(url)) {
 			console.log('url channel');
-			theatre.reload();
-			clean.reload();
-			messages.reload();
+			theatre.url_change('channel');
+			clean.url_change('channel');
+			messages.url_change('channel');
+
+		}
+		else {
+			theatre.url_change();
+			clean.url_change();
+			messages.url_change();
 		}
 
 	}

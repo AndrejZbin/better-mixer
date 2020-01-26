@@ -1,16 +1,36 @@
 class TheatreComponent extends Component {
 	constructor() {
-		const sub_popup = new WebElement('b-subscription-bundle-host', {
-			'theatre-on': function() {
-				this.obj && this.obj.css('display', 'none');
+		super('theatre');
+
+		this.in_theatre = false;
+		let self = this;
+
+		if (OPTIONS.opt('resize_top_panel'))
+			this.el('sub_popup').on_actions({
+				'theatre-on': function() {
+					this.obj && this.obj.css('display', 'none');
+				},
+				'theatre-off': function() {
+					this.obj && this.obj.css('display', 'initial');
+				},
+			});
+
+		let timeout = null;
+		this.el('stage').on_actions({
+            'url-changed-channel': function() {
+                if (OPTIONS.opt('theatre_automatic')) {
+                    timeout = setTimeout(() => {
+                    	self.toggle_theatre(true);
+                    	timeout = null;
+					}, 2200);
+                }
+            },
+			'url-changes': function () {
+				if (timeout !== null) clearTimeout(timeout)
 			},
-			'theatre-off': function() {
-				this.obj && this.obj.css('display', 'initial');
-			},
-		}, true);
-		const stage = new WebElement('.stage', {
 			'theatre-on': function() {
 				this.obj.addClass('custom-theatre');
+				if (OPTIONS.opt('black_theatre')) this.obj.addClass('black-background');
 				this.saved_style = this.obj.attr('style');
 				if (this.obj.hasClass('aspect-16-9')) {
 					this.obj.attr('style', '');
@@ -21,6 +41,7 @@ class TheatreComponent extends Component {
 			},
 			'theatre-off': function() {
 				this.obj.removeClass('custom-theatre');
+				this.obj.removeClass('black-background');
 				if (!this.obj.hasClass('aspect-16-9')) {
 					this.saved_style_theatre = this.obj.attr('style');
 				}
@@ -28,69 +49,74 @@ class TheatreComponent extends Component {
 			},
 		});
 
-		const header = new WebElement('b-desktop-header', {
-			'theatre-on': function() {
-				this.obj.addClass('custom-header');
-				this.obj.css({
-					'width': stage.obj.css('width'),
-                    'position': 'fixed',
-				});
-			},
-			'theatre-off': function() {
-				this.obj.removeClass('custom-header');
-				this.obj.css({
-					'width': '100%',
-                    'position': 'sticky',
-				});
-			},
-			'url-change': function() {
-				this.obj.removeClass('custom-header');
-				this.obj.css({
-					'width': '100%',
-				});
-				$('.theatre-button').remove();
-			}
-		});
-
-		const chat = new WebElement('aside.chat',{
-			'theatre-on': function() {
-				// disconnected when fullscreen
-				let obj = this.obj.get(0);
-				if (!obj || !obj.isConnected) {
-					this.obj = $(this.query);
+		if (OPTIONS.opt('resize_top_panel'))
+			this.el('header').on_actions({
+				'theatre-on': function() {
+					this.obj.addClass('custom-header');
+					this.obj.css({
+						'width': EM.el('stage').obj.css('width'),
+						'position': 'fixed',
+					});
+				},
+				'theatre-off': function() {
+					this.obj.removeClass('custom-header');
+					this.obj.css({
+						'width': '100%',
+						'position': 'sticky',
+					});
+				},
+				'url-changed': function() {
+					this.action('theatre-off');
+					this.obj.find('.theatre-button').remove();
 				}
-				this.obj.css('top', '0');
-			},
-			'theatre-off': function() {
-				this.obj.css('top', '60px');
-			}
-		});
+			});
 
-		const channel_page = new WebElement('div.channel-page',{
-			'theatre-on': function() {
-				this.obj.css({
-					'height': '100vh',
-					'max-height': '100vh',
-				});
-			},
-			'theatre-off': function() {
-				this.obj.css({
-					'height': 'calc(100vh - 60px)',
-					'max-height': 'calc(100vh - 60px)',
-				});
-			}
-		});
+		if (OPTIONS.opt('resize_top_panel'))
+			this.el('chat').on_actions({
+				'loaded': function() {
+					if (self.in_theatre) this.action('theatre-on');
+					else this.action('theatre-off');
+				},
+				'theatre-on': function() {
+					// disconnected when fullscreen
+					let obj = this.obj.get(0);
+					if (!obj || !obj.isConnected) {
+						this.obj = $(this.query);
+					}
+					this.obj.css('top', '0');
+				},
+				'theatre-off': function() {
+					this.obj.css('top', '60px');
+				}
+			});
 
-		const profile_header = new WebElement('div.layout-row.layout-align-space-between-start.profile-header', {
-			'theatre-on': function() {
-				this.obj.css('position', 'relative');
-			},
-			'theatre-off': function() {
-				this.obj.css('position', 'sticky');
-			}
-		});
+		if (OPTIONS.opt('resize_top_panel'))
+			this.el('channel_page').on_actions({
+				'theatre-on': function() {
+					this.obj.css({
+						'height': '100vh',
+						'max-height': '100vh',
+					});
+				},
+				'theatre-off': function() {
+					this.obj.css({
+						'height': 'calc(100vh - 60px)',
+						'max-height': 'calc(100vh - 60px)',
+					});
+				}
+			});
 
-		const chat_resizer = new WebElement('b-channel-chat-resizer', {
+		if (OPTIONS.opt('resize_top_panel'))
+			this.el('profile_header').on_actions({
+				'theatre-on': function() {
+					this.obj.css('position', 'relative');
+				},
+				'theatre-off': function() {
+					this.obj.css('position', 'sticky');
+				}
+			});
+
+		this.el('chat_resizer').on_actions({
 			'theatre-on': function() {
 				this.obj.css('display', 'none');
 			},
@@ -99,49 +125,47 @@ class TheatreComponent extends Component {
 			}
 		});
 
-		const theatre_button_bound = new WebElement('b-title-progression-host');
-		const language_selector = new WebElement('b-language-selector');
-
-		super('theatre', [stage, header, chat, channel_page, profile_header, chat_resizer, theatre_button_bound, language_selector, sub_popup]);
-
-		this.theatre_button_bound = theatre_button_bound;
-		this.language_selector = language_selector;
-		this.in_theatre = false;
-	}
-
-	reload() {
-		super.reload();
-		this.in_theatre = false;
-	}
-
-	get_button(classes='') {
-		let $threatre_button = $(`<input type="button" class="theatre-button ${classes}" value="📺" title="Theatre Mode"/>`);
-		$threatre_button.click(this.on_button_click.bind(this));
-		return $threatre_button;
-	}
-
-	on_button_click() {
-		console.log('theatre mode changed');
-		this.in_theatre = !this.in_theatre;
-		if (this.in_theatre) this.action('theatre-on');
-		else this.action('theatre-off')
-	}
-
-	main() {
-		super.main();
-		$('.theatre-button').remove();
-
-		$(document).on('keypress', e => {
-			if ([84, 116].includes(e.which) && !['TEXTAREA'].includes(e.target.nodeName)) {
-				this.on_button_click();
+		this.el('theatre_button_bound').on_actions({
+			'url-changed-channel': function () {
+				this.obj_promise()
+					.then(obj => {
+						obj.parent().find('.theatre-button').remove();
+						obj.before(self.theatre_button($(obj)));
+					});
 			}
 		});
 
-		this.language_selector.obj.before(this.get_button("theatre-button-small"));
-		this.theatre_button_bound.obj.before(this.get_button());
+		if (OPTIONS.opt('keyboard_control'))
+            $(document).keydown((e) => {
+                if ([84, 116].includes(e.which) && !['TEXTAREA', 'TEXTFIELD'].includes(e.target.nodeName)) {
+                    this.toggle_theatre();
+                }
+            });
+	}
+
+	theatre_button(copyObj) {
+		let $threatre_button = $(`
+			<span class="${copyObj.attr('class')}">
+				<button type="button" class="theatre-button ${copyObj.find('button').attr('class')}">
+					<span class="${copyObj.find('span').attr('class')}">Theatre Mode</span>
+					<i class="${copyObj.find('i').attr('class')}">settings_overscan</i>
+				</button>
+			</span>`);
+		$threatre_button.click(this.toggle_theatre.bind(this));
+		return $threatre_button;
+	}
+
+	toggle_theatre(state) {
+		if (state === true) {
+			this.in_theatre = true;
+		}
+		else if (state === false) {
+			this.in_theatre = false;
+		}
+		else {
+			this.in_theatre = !this.in_theatre;
+		}
+		if (this.in_theatre) this.action('theatre-on');
+		else this.action('theatre-off')
 	}
 }
-
-
-
-

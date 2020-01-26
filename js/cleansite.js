@@ -1,20 +1,10 @@
 class CleanComponent extends Component {
     constructor() {
-        const head= new WebElement('head', {
-            'loaded': function() {
-                this.obj.append($(`<link rel='stylesheet' href='${BROWSER.runtime.getURL('css/cleansite/compact.css')}' type='text/css' media='screen' />`));
-                this.obj.append($(`<link rel='stylesheet' href='${BROWSER.runtime.getURL('css/cleansite/badges.css')}' type='text/css' media='screen' />`));
-                this.obj.append($(`<link rel='stylesheet' href='${BROWSER.runtime.getURL('css/cleansite/avatars.css')}' type='text/css' media='screen' />`));
-            },
-            'url-change': function () {
+        super('clean-site');
 
-            }
-        });
-        const body = new WebElement('body');
-        super('clean-site', [head, body]);
-        this.body = body;
-    }
-    main() {
-        super.main();
+        if (OPTIONS.opt('compact_chat')) add_css('css/cleansite/compact.css');
+        if (OPTIONS.opt('remove_spark')) add_css('css/cleansite/spark-badges.css');
+        if (OPTIONS.opt('remove_avatars')) add_css('css/cleansite/avatars.css');
+        if (OPTIONS.opt('remove_purchase')) add_css('css/cleansite/purchase.css');
     }
 }
