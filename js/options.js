@@ -4,7 +4,7 @@ else if (typeof chrome !== "undefined") BROWSER = chrome;
 
 class Options {
     constructor() {
-        const fields = ['remove_spark', 'move_badge', 'compact_chat', 'sub_only', 'resize_top_panel', 'remove_avatars', 'theatre_automatic', 'keyboard_control', 'black_theatre', 'remove_purchase'];
+        const fields = ['remove_spark', 'move_badge', 'compact_chat', 'sub_only', 'remove_avatars', 'theatre_automatic', 'keyboard_control', 'black_theatre', 'remove_purchase'];
         this.options = {};
 
         let self = this;
@@ -15,6 +15,7 @@ class Options {
             counter++;
             if (counter === fields.length) {
                 self.options['sub_only'] = !self.options['sub_only']; //TODO: clean this
+                self.options['resize_top_panel'] = false; // TODO: disabled for now
                 self.loaded = true;
                 console.log('settings loaded')
             }
@@ -52,3 +53,4 @@ class Options {
 }
 
 var OPTIONS = new Options();
+

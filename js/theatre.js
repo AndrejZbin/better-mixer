@@ -130,7 +130,7 @@ class TheatreComponent extends Component {
 				this.obj_promise()
 					.then(obj => {
 						obj.parent().find('.theatre-button').remove();
-						obj.before(self.theatre_button())
+						obj.before(self.theatre_button($(obj)));
 					});
 			}
 		});
@@ -143,11 +143,14 @@ class TheatreComponent extends Component {
             });
 	}
 
-	theatre_button(classes='') {
+	theatre_button(copyObj) {
 		let $threatre_button = $(`
-			<div _ngcontent-c68="" class="control">
-				<input type="button" class="theatre-button ${classes}" value="📺" title="Theatre Mode"/>
-			</div>`);
+			<span class="${copyObj.attr('class')}">
+				<button type="button" class="theatre-button ${copyObj.find('button').attr('class')}">
+					<span class="${copyObj.find('span').attr('class')}">Theatre Mode</span>
+					<i class="${copyObj.find('i').attr('class')}">settings_overscan</i>
+				</button>
+			</span>`);
 		$threatre_button.click(this.toggle_theatre.bind(this));
 		return $threatre_button;
 	}

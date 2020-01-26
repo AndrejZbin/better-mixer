@@ -42,7 +42,7 @@ class WebElement {
                         this.action('loaded');
                         resolve(this._obj);
                     }
-                    else if (repeats > 10) {
+                    else if (repeats > 20) {
                         clearInterval(interval);
                         reject();
                     }
@@ -115,7 +115,7 @@ EM.add_element('chat', 'aside.chat');
 EM.add_element('channel_page', 'div.channel-page');
 EM.add_element('profile_header', 'div.layout-row.layout-align-space-between-start.profile-header');
 EM.add_element('chat_resizer', 'b-channel-chat-resizer');
-EM.add_element('theatre_button_bound', 'light-desktop-controls .toolbar .right .control:last-child');
+EM.add_element('theatre_button_bound', '.player-container .spectre-container div div div:nth-child(2) div:nth-child(3) div div:nth-child(2) > span:last-child');
 EM.add_element('language_selector', 'b-language-selector');
 EM.add_element('head', 'head');
 EM.add_element('mute_button', 'light-desktop-controls .toolbar .right light-volume-control button');
